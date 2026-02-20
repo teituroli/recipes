@@ -12,5 +12,12 @@
     "rating": 3,
     "comment": "Egentlig en meget god ret - men mere salt end der står i opskriften",
     "date": "2026-02-20"
+  },
+  {
+    "slug": "quick-and-dirty-tortellini",
+    "author": "Teitur",
+    "rating": 4,
+    "comment": "Smag til tid ratio er fantastisk!",
+    "date": "2026-02-20"
   }
 ]
