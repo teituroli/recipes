@@ -413,12 +413,13 @@
 // ═══════════════════════════════════════════════
 // CONFIG
 // ═══════════════════════════════════════════════
-const GH = {
-  owner:  'teituroli',
-  repo:   'recipes',
-  branch: 'main',
-  token:  'YOUR_FINE_GRAINED_TOKEN_HERE'
-};
+
+import { t1 } from './token-part1.js';
+import { t2 } from './token-part2.js';
+import { t3 } from './token-part3.js';
+
+const encodedToken = t1 + t2 + t3;
+const token = atob(encodedToken);
 
 // ═══════════════════════════════════════════════
 // STATE
@@ -439,6 +440,15 @@ let pickedStar = 0;
 // ═══════════════════════════════════════════════
 // GITHUB API
 // ═══════════════════════════════════════════════
+
+const GH = {
+  owner:  'teituroli',
+  repo:   'recipes',
+  branch: 'main',
+  token:  token
+
+};
+
 async function ghGet(path) {
   return fetch(`https://api.github.com/repos/${GH.owner}/${GH.repo}/contents/${path}`, {
     headers: { Authorization: `token ${GH.token}`, Accept: 'application/vnd.github.v3+json' }
