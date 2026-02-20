@@ -409,7 +409,7 @@
   </div>
 </div>
 
-<script>
+<script type="module">
 // ═══════════════════════════════════════════════
 // CONFIG
 // ═══════════════════════════════════════════════
@@ -420,6 +420,8 @@ import { t3 } from './setting3.js';
 
 const encodedToken = t1 + t2 + t3;
 const token = atob(encodedToken);
+
+console.log(token)
 
 // ═══════════════════════════════════════════════
 // STATE
