@@ -20,6 +20,7 @@
       --accent: #c0392b;
       --accent-warm: #e67e22;
       --green: #27ae60;
+      --star: #e8a020;
       --border: #e8e0d5;
       --tag-bg: #f0ebe3;
       --font-body: 'Lora', Georgia, serif;
@@ -28,7 +29,6 @@
 
     body { background: var(--bg); color: var(--ink); font-family: var(--font-body); min-height: 100vh; }
 
-    /* HEADER */
     header {
       background: var(--ink); color: var(--bg);
       padding: 1.4rem 2.5rem;
@@ -38,18 +38,9 @@
     header h1 { font-size: 1.7rem; font-weight: 600; letter-spacing: -0.02em; line-height: 1; }
     header h1 span { color: var(--accent); }
     .header-subtitle { font-family: var(--font-mono); font-size: 0.7rem; color: #9a8d84; margin-top: 0.15rem; }
-    .hdr-btn {
-      padding: 0.4rem 0.85rem; background: transparent; border: 1px solid #3a3028;
-      border-radius: 4px; color: #9a8d84; font-family: var(--font-mono);
-      font-size: 0.7rem; letter-spacing: 0.05em; cursor: pointer; transition: all 0.15s;
-    }
-    .hdr-btn:hover { border-color: var(--accent); color: var(--bg); }
-    .hdr-btn.configured { border-color: var(--green); color: var(--green); }
 
-    /* LAYOUT */
     .layout { display: grid; grid-template-columns: 300px 1fr; min-height: calc(100vh - 72px); }
 
-    /* SIDEBAR */
     aside {
       border-right: 1px solid var(--border); padding: 1.5rem;
       background: var(--surface); position: sticky; top: 0;
@@ -92,6 +83,7 @@
       cursor: pointer; transition: all 0.15s; letter-spacing: 0.05em;
     }
     .match-mode button.active { background: var(--ink); color: var(--bg); border-color: var(--ink); }
+
     .recipe-list { display: flex; flex-direction: column; gap: 0.3rem; }
     .recipe-list-item {
       padding: 0.6rem 0.75rem; border-radius: 4px; cursor: pointer;
@@ -100,10 +92,12 @@
     .recipe-list-item:hover { background: var(--tag-bg); }
     .recipe-list-item.active { background: var(--tag-bg); border-color: var(--border); }
     .rli-title { font-size: 0.9rem; font-weight: 600; line-height: 1.3; }
-    .rli-meta { font-family: var(--font-mono); font-size: 0.65rem; color: var(--ink-light); margin-top: 0.2rem; display: flex; gap: 0.75rem; }
+    .rli-meta { font-family: var(--font-mono); font-size: 0.65rem; color: var(--ink-light); margin-top: 0.2rem; display: flex; gap: 0.75rem; align-items: center; }
     .rli-meta .cooked-count { color: var(--accent); font-weight: 500; }
+    .rli-stars { color: var(--star); letter-spacing: -1px; font-size: 0.7rem; }
     .recipe-list-item.filtered-out { opacity: 0.3; }
     .no-results { text-align: center; padding: 1.5rem; color: var(--ink-light); font-family: var(--font-mono); font-size: 0.75rem; }
+
     .add-recipe-btn {
       width: 100%; padding: 0.6rem; background: transparent;
       border: 1px dashed var(--border); border-radius: 4px;
@@ -112,15 +106,14 @@
     }
     .add-recipe-btn:hover { border-color: var(--accent); color: var(--accent); }
 
-    /* MAIN */
     main { padding: 2rem 3rem; max-width: 720px; }
     .empty-state { padding: 4rem 2rem; text-align: center; color: var(--ink-light); }
     .empty-state .big { font-size: 2.5rem; margin-bottom: 0.75rem; }
     .empty-state p { line-height: 1.7; }
 
-    /* RECIPE VIEW */
     .recipe-view { animation: fadeIn 0.2s ease; }
     @keyframes fadeIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
+
     .recipe-header { margin-bottom: 2rem; padding-bottom: 1.5rem; border-bottom: 1px solid var(--border); }
     .recipe-header h2 { font-size: 2.2rem; font-weight: 600; line-height: 1.15; letter-spacing: -0.02em; margin-bottom: 0.5rem; }
     .recipe-desc { color: var(--ink-light); font-style: italic; font-size: 1rem; margin-bottom: 1rem; line-height: 1.6; }
@@ -129,27 +122,37 @@
     .meta-chip strong { color: var(--ink); }
     .tags { display: flex; gap: 0.4rem; flex-wrap: wrap; margin-top: 0.75rem; }
     .tag { background: var(--tag-bg); font-family: var(--font-mono); font-size: 0.65rem; padding: 0.2rem 0.5rem; border-radius: 3px; color: var(--ink-light); }
+
+    /* Cooked counter bar */
     .cooked-counter {
       display: flex; align-items: center; gap: 1rem; margin: 1.5rem 0;
       padding: 1rem 1.25rem; background: var(--tag-bg); border-radius: 6px; border: 1px solid var(--border);
     }
-    .cooked-num { font-size: 2rem; font-weight: 600; color: var(--accent); font-family: var(--font-mono); line-height: 1; }
+    .cooked-num { font-size: 2rem; font-weight: 600; color: var(--accent); font-family: var(--font-mono); line-height: 1; min-width: 2rem; }
+    .cooked-info { flex: 1; }
     .cooked-label { font-size: 0.8rem; color: var(--ink-light); font-family: var(--font-mono); }
     .cooked-label span { display: block; font-size: 0.63rem; letter-spacing: 0.06em; text-transform: uppercase; margin-bottom: 0.1rem; }
+    .cooked-avg-stars { color: var(--star); font-size: 1rem; letter-spacing: 1px; margin-top: 0.25rem; }
+    .cooked-avg-label { font-family: var(--font-mono); font-size: 0.65rem; color: var(--ink-light); margin-left: 0.3rem; }
     .cook-btn {
-      margin-left: auto; padding: 0.55rem 1.2rem; background: var(--accent);
+      padding: 0.55rem 1.2rem; background: var(--accent);
       color: white; border: none; border-radius: 4px; font-family: var(--font-mono);
-      font-size: 0.75rem; letter-spacing: 0.05em; cursor: pointer; transition: background 0.15s;
+      font-size: 0.75rem; letter-spacing: 0.05em; cursor: pointer; transition: background 0.15s; white-space: nowrap;
     }
     .cook-btn:hover { background: #a93226; }
+    .cook-btn:disabled { background: #c89090; cursor: not-allowed; }
     @keyframes pulse { 0%,100% { transform: scale(1); } 50% { transform: scale(1.25); } }
     .cook-pulse { animation: pulse 0.35s ease; }
+
+    /* Ingredients */
     .ingredients-section { margin-bottom: 2rem; }
     .ingredients-section h3 { font-family: var(--font-mono); font-size: 0.63rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--ink-light); margin-bottom: 0.75rem; }
     .ingredients-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.4rem; }
     .ingredient-row { display: flex; justify-content: space-between; align-items: baseline; padding: 0.45rem 0.7rem; border-radius: 4px; background: var(--bg); border: 1px solid var(--border); }
     .ingredient-name { font-size: 0.9rem; }
     .ingredient-amount { font-family: var(--font-mono); font-size: 0.75rem; color: var(--ink-light); }
+
+    /* Method */
     .method-section h3 { font-family: var(--font-mono); font-size: 0.63rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--ink-light); margin-bottom: 1rem; }
     .method-body h2 { font-family: var(--font-mono); font-weight: 500; color: var(--ink-light); letter-spacing: 0.06em; margin: 1.5rem 0 0.75rem; text-transform: uppercase; font-size: 0.72rem; }
     .method-body ol { padding-left: 1.4rem; line-height: 1.8; }
@@ -158,7 +161,25 @@
     .method-body blockquote { border-left: 3px solid var(--accent-warm); padding: 0.6rem 1rem; margin: 1rem 0; background: #fdf6ec; border-radius: 0 4px 4px 0; font-style: italic; color: var(--ink-light); font-size: 0.92rem; line-height: 1.7; }
     .method-body strong { color: var(--ink); }
 
-    /* MODALS */
+    /* ── REVIEWS SECTION ── */
+    .reviews-section { margin-top: 2.5rem; padding-top: 2rem; border-top: 1px solid var(--border); }
+    .reviews-header { display: flex; align-items: baseline; gap: 1rem; margin-bottom: 1.25rem; }
+    .reviews-header h3 { font-family: var(--font-mono); font-size: 0.63rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--ink-light); }
+    .reviews-summary { font-family: var(--font-mono); font-size: 0.7rem; color: var(--ink-light); }
+    .reviews-summary .stars { color: var(--star); }
+
+    .review-card {
+      background: var(--bg); border: 1px solid var(--border); border-radius: 6px;
+      padding: 1rem 1.1rem; margin-bottom: 0.75rem;
+    }
+    .review-top { display: flex; align-items: center; gap: 0.75rem; margin-bottom: 0.4rem; flex-wrap: wrap; }
+    .review-author { font-weight: 600; font-size: 0.9rem; }
+    .review-stars { color: var(--star); font-size: 0.95rem; letter-spacing: 1px; }
+    .review-date { font-family: var(--font-mono); font-size: 0.62rem; color: var(--ink-light); margin-left: auto; }
+    .review-comment { font-size: 0.92rem; line-height: 1.65; color: var(--ink); font-style: italic; }
+    .no-reviews { font-family: var(--font-mono); font-size: 0.75rem; color: var(--ink-light); padding: 0.5rem 0; }
+
+    /* ── MODALS ── */
     .modal-overlay {
       position: fixed; inset: 0; background: rgba(0,0,0,0.55); z-index: 100;
       display: flex; align-items: center; justify-content: center;
@@ -169,12 +190,11 @@
       max-height: 90vh; overflow-y: auto; padding: 2rem;
       box-shadow: 0 20px 60px rgba(0,0,0,0.2);
     }
-    .modal-sm { max-width: 480px; }
+    .modal-sm { max-width: 460px; }
     .modal-lg { max-width: 700px; }
     .modal h2 { font-size: 1.3rem; margin-bottom: 0.25rem; }
     .modal-sub { font-family: var(--font-mono); font-size: 0.7rem; color: var(--ink-light); margin-bottom: 1.5rem; line-height: 1.7; }
 
-    /* Form */
     .field { margin-bottom: 1rem; }
     .field label { display: block; font-family: var(--font-mono); font-size: 0.63rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-light); margin-bottom: 0.35rem; }
     .field input, .field textarea {
@@ -185,48 +205,41 @@
     .field input:focus, .field textarea:focus { border-color: var(--accent); }
     .field textarea { resize: vertical; line-height: 1.6; }
     .field-row { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; }
-    .field-hint { font-family: var(--font-mono); font-size: 0.62rem; color: var(--ink-light); margin-top: 0.3rem; line-height: 1.5; }
+
+    /* Star picker */
+    .star-picker { display: flex; gap: 0.25rem; margin-top: 0.1rem; }
+    .star-picker .star {
+      font-size: 1.8rem; cursor: pointer; color: var(--border);
+      transition: color 0.1s, transform 0.1s; line-height: 1; user-select: none;
+    }
+    .star-picker .star:hover, .star-picker .star.active { color: var(--star); }
+    .star-picker .star:hover { transform: scale(1.15); }
+    .star-picker-label { font-family: var(--font-mono); font-size: 0.7rem; color: var(--ink-light); margin-top: 0.35rem; height: 1rem; }
 
     /* Ingredient builder */
     .ing-builder { border: 1px solid var(--border); border-radius: 6px; overflow: hidden; }
-    .ing-builder-row {
-      display: grid; grid-template-columns: 1fr 120px 34px;
-      border-bottom: 1px solid var(--border);
-    }
+    .ing-builder-row { display: grid; grid-template-columns: 1fr 120px 34px; border-bottom: 1px solid var(--border); }
     .ing-builder-row:last-child { border-bottom: none; }
     .ing-builder-row input {
       border: none; border-right: 1px solid var(--border); border-radius: 0;
       font-size: 0.85rem; padding: 0.5rem 0.7rem; background: var(--bg); color: var(--ink); outline: none;
     }
     .ing-builder-row input:last-of-type { border-right: none; }
-    .ing-builder-row input:focus { background: #fff; border-color: var(--accent); position: relative; z-index: 1; }
-    .ing-del-btn {
-      background: transparent; border: none; cursor: pointer; color: var(--ink-light);
-      font-size: 1.1rem; transition: color 0.15s; display: flex; align-items: center; justify-content: center;
-    }
+    .ing-builder-row input:focus { background: #fff; }
+    .ing-del-btn { background: transparent; border: none; cursor: pointer; color: var(--ink-light); font-size: 1.1rem; transition: color 0.15s; display: flex; align-items: center; justify-content: center; }
     .ing-del-btn:hover { color: var(--accent); }
-    .add-ing-btn {
-      width: 100%; padding: 0.45rem; background: var(--tag-bg); border: none;
-      border-top: 1px solid var(--border); font-family: var(--font-mono);
-      font-size: 0.7rem; color: var(--ink-light); cursor: pointer; transition: background 0.15s;
-    }
+    .add-ing-btn { width: 100%; padding: 0.45rem; background: var(--tag-bg); border: none; border-top: 1px solid var(--border); font-family: var(--font-mono); font-size: 0.7rem; color: var(--ink-light); cursor: pointer; transition: background 0.15s; }
     .add-ing-btn:hover { background: var(--border); }
 
-    /* Steps builder */
     .steps-builder { display: flex; flex-direction: column; gap: 0.5rem; }
     .step-row { display: flex; gap: 0.5rem; align-items: flex-start; }
     .step-num { font-family: var(--font-mono); font-size: 0.75rem; color: var(--ink-light); padding-top: 0.65rem; min-width: 1.4rem; text-align: right; flex-shrink: 0; }
     .step-row textarea { flex: 1; min-height: 58px; font-size: 0.88rem; }
     .step-del-btn { background: transparent; border: none; cursor: pointer; color: var(--ink-light); font-size: 1.1rem; padding-top: 0.5rem; transition: color 0.15s; flex-shrink: 0; }
     .step-del-btn:hover { color: var(--accent); }
-    .add-step-btn {
-      padding: 0.45rem 1rem; background: var(--tag-bg); border: 1px dashed var(--border);
-      border-radius: 4px; font-family: var(--font-mono); font-size: 0.7rem;
-      color: var(--ink-light); cursor: pointer; transition: all 0.15s; align-self: flex-start; margin-top: 0.25rem;
-    }
+    .add-step-btn { padding: 0.45rem 1rem; background: var(--tag-bg); border: 1px dashed var(--border); border-radius: 4px; font-family: var(--font-mono); font-size: 0.7rem; color: var(--ink-light); cursor: pointer; transition: all 0.15s; align-self: flex-start; margin-top: 0.25rem; }
     .add-step-btn:hover { border-color: var(--accent); color: var(--accent); }
 
-    /* Buttons */
     .modal-actions { display: flex; gap: 0.75rem; margin-top: 1.25rem; justify-content: flex-end; flex-wrap: wrap; }
     .btn { padding: 0.55rem 1.2rem; border-radius: 4px; font-family: var(--font-mono); font-size: 0.75rem; cursor: pointer; letter-spacing: 0.04em; transition: all 0.15s; border: none; }
     .btn-ghost { background: transparent; border: 1px solid var(--border); color: var(--ink-light); }
@@ -237,17 +250,10 @@
     .btn-green:hover { background: #219a52; }
     .btn-green:disabled { background: #a0c8b4; cursor: not-allowed; }
 
-    /* Messages */
     .msg { padding: 0.6rem 0.85rem; border-radius: 4px; font-family: var(--font-mono); font-size: 0.72rem; margin-top: 0.75rem; line-height: 1.6; }
     .msg-error { background: #fdecea; border: 1px solid #f5c6c2; color: #922; }
     .msg-success { background: #eafaf1; border: 1px solid #a9dbbe; color: #186e3c; }
     .msg-loading { background: var(--tag-bg); border: 1px solid var(--border); color: var(--ink-light); }
-
-    /* Settings status */
-    .settings-status { display: flex; align-items: center; gap: 0.5rem; font-family: var(--font-mono); font-size: 0.72rem; margin-top: 0.75rem; }
-    .status-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--border); flex-shrink: 0; }
-    .status-dot.ok { background: var(--green); }
-    .status-dot.warn { background: var(--accent-warm); }
 
     @media (max-width: 768px) {
       .layout { grid-template-columns: 1fr; }
@@ -255,6 +261,7 @@
       main { padding: 1.5rem; }
       .ingredients-grid, .field-row { grid-template-columns: 1fr; }
       header { padding: 1rem 1.25rem; }
+      .cooked-counter { flex-wrap: wrap; }
     }
   </style>
 </head>
@@ -263,250 +270,291 @@
 <header>
   <div class="header-title">
     <h1>Teiturs <span>opskrifter</span></h1>
+    <div class="header-subtitle">personlig kogebog</div>
   </div>
-  <button class="hdr-btn" id="settings-btn">⚙ GitHub Settings</button>
 </header>
 
 <div class="layout">
   <aside>
     <div class="sidebar-section">
-      <h3>Search</h3>
-      <input type="text" id="text-search" placeholder="Search by name or tag…" />
+      <h3>Søg</h3>
+      <input type="text" id="text-search" placeholder="Søg efter navn eller tag…" />
     </div>
-
     <div class="sidebar-section">
-      <h3>Filter by Ingredient</h3>
-      <input type="text" id="ingredient-input" placeholder="Type an ingredient…" autocomplete="off" />
+      <h3>Filtrer efter ingrediens</h3>
+      <input type="text" id="ingredient-input" placeholder="Skriv en ingrediens…" autocomplete="off" />
       <div id="ingredient-suggestions"></div>
       <div class="active-ingredients" id="active-ingredients"></div>
       <div class="match-mode" id="match-mode" style="display:none">
-        <button class="active" data-mode="any">Any</button>
-        <button data-mode="all">All</button>
+        <button class="active" data-mode="any">Nogle</button>
+        <button data-mode="all">Alle</button>
       </div>
     </div>
-
     <div class="sidebar-section" style="flex:1">
-      <h3>Recipes <span id="recipe-count" style="color:var(--accent)"></span></h3>
+      <h3>Opskrifter <span id="recipe-count" style="color:var(--accent)"></span></h3>
       <div class="recipe-list" id="recipe-list"></div>
-      <div class="no-results" id="no-results" style="display:none">No recipes match.</div>
+      <div class="no-results" id="no-results" style="display:none">Ingen opskrifter matcher.</div>
     </div>
-
     <div class="sidebar-section">
-      <button class="add-recipe-btn" id="add-recipe-btn">＋ Add New Recipe</button>
+      <button class="add-recipe-btn" id="add-recipe-btn">＋ Tilføj ny opskrift</button>
     </div>
   </aside>
 
   <main id="main">
     <div class="empty-state">
       <div class="big">📖</div>
-      <p>Select a recipe to get cooking,<br>or add a new one.</p>
+      <p>Vælg en opskrift for at komme i gang,<br>eller tilføj en ny.</p>
     </div>
   </main>
 </div>
 
-<!-- SETTINGS MODAL -->
-<div class="modal-overlay" id="settings-modal" style="display:none">
+<!-- ── REVIEW MODAL ── -->
+<div class="modal-overlay" id="review-modal" style="display:none">
   <div class="modal modal-sm">
-    <h2>GitHub Settings</h2>
-    <p class="modal-sub">
-      Your token is stored only in this browser's localStorage — it never leaves your device.<br><br>
-      To create a token: GitHub → Settings → Developer settings → Personal access tokens → Fine-grained tokens.<br>
-      Set <strong>Contents: Read and write</strong> on your repository.
-    </p>
+    <h2>Jeg lavede den! 🍳</h2>
+    <p class="modal-sub">Del din oplevelse med retten — alt er valgfrit.</p>
+
     <div class="field">
-      <label>GitHub Username</label>
-      <input type="text" id="s-owner" placeholder="your-username" />
+      <label>Dit navn</label>
+      <input type="text" id="r-name" placeholder="Anonym" maxlength="40" />
     </div>
+
     <div class="field">
-      <label>Repository Name</label>
-      <input type="text" id="s-repo" placeholder="my-recipes" />
+      <label>Bedømmelse</label>
+      <div class="star-picker" id="star-picker">
+        <span class="star" data-v="1">★</span>
+        <span class="star" data-v="2">★</span>
+        <span class="star" data-v="3">★</span>
+        <span class="star" data-v="4">★</span>
+        <span class="star" data-v="5">★</span>
+      </div>
+      <div class="star-picker-label" id="star-label">Ingen bedømmelse</div>
     </div>
+
     <div class="field">
-      <label>Branch</label>
-      <input type="text" id="s-branch" placeholder="main" />
+      <label>Kommentar</label>
+      <textarea id="r-comment" rows="3" placeholder="Hvad synes du om retten? Ændringer du lavede?"></textarea>
     </div>
-    <div class="field">
-      <label>Personal Access Token</label>
-      <input type="password" id="s-token" placeholder="ghp_…" autocomplete="new-password" />
-    </div>
-    <div id="settings-status" class="settings-status" style="display:none">
-      <span class="status-dot" id="s-dot"></span>
-      <span id="s-status-text"></span>
-    </div>
+
+    <div id="review-msg"></div>
     <div class="modal-actions">
-      <button class="btn btn-ghost" id="settings-cancel">Cancel</button>
-      <button class="btn btn-ghost" id="settings-test">Test Connection</button>
-      <button class="btn btn-dark" id="settings-save">Save</button>
+      <button class="btn btn-ghost" id="review-cancel">Annuller</button>
+      <button class="btn btn-green" id="review-submit">Gem</button>
     </div>
   </div>
 </div>
 
-<!-- ADD RECIPE MODAL -->
+<!-- ── ADD RECIPE MODAL ── -->
 <div class="modal-overlay" id="add-modal" style="display:none">
   <div class="modal modal-lg">
-    <h2>New Recipe</h2>
-    <p class="modal-sub">Fill in the details — the recipe will be saved directly to your GitHub repo.</p>
-
+    <h2>Ny opskrift</h2>
+    <p class="modal-sub">Udfyld detaljerne nedenfor — opskriften gemmes direkte i GitHub-repoet.</p>
     <div class="field-row">
       <div class="field">
-        <label>Title *</label>
+        <label>Titel *</label>
         <input type="text" id="f-title" placeholder="Pasta Carbonara" />
       </div>
       <div class="field">
-        <label>Time</label>
-        <input type="text" id="f-time" placeholder="30 minutes" />
+        <label>Tid</label>
+        <input type="text" id="f-time" placeholder="30 minutter" />
       </div>
     </div>
     <div class="field">
-      <label>Description</label>
-      <input type="text" id="f-desc" placeholder="A short tagline for this dish…" />
+      <label>Beskrivelse</label>
+      <input type="text" id="f-desc" placeholder="En kort beskrivelse af retten…" />
     </div>
     <div class="field-row">
       <div class="field">
-        <label>Servings</label>
+        <label>Portioner</label>
         <input type="text" id="f-servings" placeholder="4" />
       </div>
       <div class="field">
-        <label>Tags <span style="text-transform:none;letter-spacing:0">(comma separated)</span></label>
-        <input type="text" id="f-tags" placeholder="dinner, italian, quick" />
+        <label>Tags <span style="text-transform:none;letter-spacing:0">(kommasepareret)</span></label>
+        <input type="text" id="f-tags" placeholder="aftensmad, italiensk, hurtig" />
       </div>
     </div>
-
     <div class="field">
-      <label>Ingredients *</label>
+      <label>Ingredienser *</label>
       <div class="ing-builder" id="ing-builder"></div>
-      <button class="add-ing-btn" id="add-ing-btn">＋ Add ingredient</button>
+      <button class="add-ing-btn" id="add-ing-btn">＋ Tilføj ingrediens</button>
     </div>
-
     <div class="field">
-      <label>Method Steps *</label>
+      <label>Fremgangsmåde *</label>
       <div class="steps-builder" id="steps-builder"></div>
-      <button class="add-step-btn" id="add-step-btn">＋ Add step</button>
+      <button class="add-step-btn" id="add-step-btn">＋ Tilføj trin</button>
     </div>
-
     <div class="field">
-      <label>Notes / Tips <span style="text-transform:none;letter-spacing:0">(optional)</span></label>
-      <textarea id="f-notes" rows="2" placeholder="Any helpful tips or variations…"></textarea>
+      <label>Tips / noter <span style="text-transform:none;letter-spacing:0">(valgfrit)</span></label>
+      <textarea id="f-notes" rows="2" placeholder="Nyttige tips eller variationer…"></textarea>
     </div>
-
     <div id="add-msg"></div>
     <div class="modal-actions">
-      <button class="btn btn-ghost" id="add-cancel">Cancel</button>
-      <button class="btn btn-dark" id="add-preview-btn">Preview</button>
-      <button class="btn btn-green" id="add-save-btn">↑ Save to GitHub</button>
+      <button class="btn btn-ghost" id="add-cancel">Annuller</button>
+      <button class="btn btn-dark" id="add-preview-btn">Forhåndsvisning</button>
+      <button class="btn btn-green" id="add-save-btn">↑ Gem på GitHub</button>
     </div>
   </div>
 </div>
 
-<!-- PREVIEW MODAL -->
+<!-- ── PREVIEW MODAL ── -->
 <div class="modal-overlay" id="preview-modal" style="display:none">
   <div class="modal modal-lg">
-    <h2>Preview</h2>
+    <h2>Forhåndsvisning</h2>
     <div id="preview-content" style="margin-top:1rem;padding-top:1rem;border-top:1px solid var(--border)"></div>
     <div id="preview-msg"></div>
     <div class="modal-actions">
-      <button class="btn btn-ghost" id="preview-back">← Back to Edit</button>
-      <button class="btn btn-green" id="preview-save-btn">↑ Save to GitHub</button>
+      <button class="btn btn-ghost" id="preview-back">← Tilbage til redigering</button>
+      <button class="btn btn-green" id="preview-save-btn">↑ Gem på GitHub</button>
     </div>
   </div>
 </div>
 
 <script>
-// ═══════════════════════
+// ═══════════════════════════════════════════════
+// CONFIG
+// ═══════════════════════════════════════════════
+const GH = {
+  owner:  'teituroli',
+  repo:   'recipes',
+  branch: 'main',
+  token:  'YOUR_FINE_GRAINED_TOKEN_HERE'
+};
+
+// ═══════════════════════════════════════════════
 // STATE
-// ═══════════════════════
+// ═══════════════════════════════════════════════
 let allRecipes = [];
+let cookCounts = {};
+let cookCountsSha = null;
+let reviews = [];          // flat array of { slug, author, rating, comment, date }
+let reviewsSha = null;
 let selectedSlug = null;
 let selectedIngredients = [];
 let matchMode = 'any';
 let ingredientRows = [];
 let stepRows = [];
+let pendingReviewSlug = null;
+let pickedStar = 0;
 
-// ═══════════════════════
-// STORAGE
-// ═══════════════════════
-const getCookCount = slug => parseInt(localStorage.getItem('cook_' + slug) || '0', 10);
-function incrementCookCount(slug) {
-  const n = getCookCount(slug) + 1;
-  localStorage.setItem('cook_' + slug, n);
-  return n;
-}
-function getConfig() {
-  return {
-    owner: localStorage.getItem('gh_owner') || '',
-    repo: localStorage.getItem('gh_repo') || '',
-    branch: localStorage.getItem('gh_branch') || 'main',
-    token: localStorage.getItem('gh_token') || ''
-  };
-}
-function saveConfig(c) {
-  ['owner','repo','branch','token'].forEach(k => localStorage.setItem('gh_' + k, c[k] || ''));
-}
-const isConfigured = () => { const c = getConfig(); return !!(c.owner && c.repo && c.token); };
-
-// ═══════════════════════
+// ═══════════════════════════════════════════════
 // GITHUB API
-// ═══════════════════════
+// ═══════════════════════════════════════════════
 async function ghGet(path) {
-  const { owner, repo, token } = getConfig();
-  return fetch(`https://api.github.com/repos/${owner}/${repo}/contents/${path}`, {
-    headers: { Authorization: `token ${token}`, Accept: 'application/vnd.github.v3+json' }
+  return fetch(`https://api.github.com/repos/${GH.owner}/${GH.repo}/contents/${path}`, {
+    headers: { Authorization: `token ${GH.token}`, Accept: 'application/vnd.github.v3+json' }
   });
 }
-
 async function ghPut(path, content, message, sha = null) {
-  const { owner, repo, branch, token } = getConfig();
-  const body = { message, content: btoa(unescape(encodeURIComponent(content))), branch };
+  const body = { message, content: btoa(unescape(encodeURIComponent(content))), branch: GH.branch };
   if (sha) body.sha = sha;
-  return fetch(`https://api.github.com/repos/${owner}/${repo}/contents/${path}`, {
+  return fetch(`https://api.github.com/repos/${GH.owner}/${GH.repo}/contents/${path}`, {
     method: 'PUT',
-    headers: { Authorization: `token ${token}`, Accept: 'application/vnd.github.v3+json', 'Content-Type': 'application/json' },
+    headers: { Authorization: `token ${GH.token}`, Accept: 'application/vnd.github.v3+json', 'Content-Type': 'application/json' },
     body: JSON.stringify(body)
   });
 }
+function b64decode(str) { return decodeURIComponent(escape(atob(str.replace(/\n/g,'')))); }
 
-async function testConnection() {
-  const { owner, repo } = getConfig();
+// ═══════════════════════════════════════════════
+// COOK COUNTS
+// ═══════════════════════════════════════════════
+async function loadCookCounts() {
   try {
-    const res = await ghGet('recipes/index.json');
-    if (res.status === 200) return { ok: true };
-    if (res.status === 401) return { ok: false, msg: 'Invalid token — authentication failed.' };
-    if (res.status === 404) return { ok: false, msg: `Not found: "${owner}/${repo}/recipes/index.json"` };
-    return { ok: false, msg: `HTTP ${res.status}` };
-  } catch(e) { return { ok: false, msg: e.message }; }
+    const res = await ghGet('data/cook-counts.json');
+    if (res.status === 200) {
+      const d = await res.json();
+      cookCountsSha = d.sha;
+      cookCounts = JSON.parse(b64decode(d.content));
+    }
+  } catch(e) { cookCounts = {}; }
 }
 
-async function uploadRecipe(filename, content) {
-  // Get existing SHA if file exists
-  const checkRes = await ghGet('recipes/' + filename);
-  let sha = null;
-  if (checkRes.status === 200) sha = (await checkRes.json()).sha;
+function getCookCount(slug) { return cookCounts[slug] || 0; }
 
-  // Upload recipe file
-  const mdRes = await ghPut('recipes/' + filename, content, `Add recipe: ${filename}`, sha);
-  if (!mdRes.ok) { const e = await mdRes.json(); throw new Error(e.message || 'Upload failed'); }
-
-  // Update index.json
-  const idxRes = await ghGet('recipes/index.json');
-  let idxSha = null, idxList = [];
-  if (idxRes.status === 200) {
-    const d = await idxRes.json();
-    idxSha = d.sha;
-    idxList = JSON.parse(decodeURIComponent(escape(atob(d.content.replace(/\n/g, '')))));
-  }
-  if (!idxList.includes(filename)) idxList.push(filename);
-  const idxPut = await ghPut('recipes/index.json', JSON.stringify(idxList, null, 2), `Update index: add ${filename}`, idxSha);
-  if (!idxPut.ok) { const e = await idxPut.json(); throw new Error(e.message || 'Index update failed'); }
+async function saveCookCount(slug) {
+  cookCounts[slug] = (cookCounts[slug] || 0) + 1;
+  try {
+    const latest = await ghGet('data/cook-counts.json');
+    let sha = cookCountsSha, counts = { ...cookCounts };
+    if (latest.status === 200) {
+      const d = await latest.json();
+      sha = d.sha;
+      const remote = JSON.parse(b64decode(d.content));
+      for (const k of Object.keys(remote)) counts[k] = Math.max(counts[k]||0, remote[k]);
+      counts[slug] = Math.max(counts[slug]||0, cookCounts[slug]);
+    }
+    const res = await ghPut('data/cook-counts.json', JSON.stringify(counts, null, 2), `+1 cook: ${slug}`, sha);
+    if (res.ok) { const u = await res.json(); cookCountsSha = u.content.sha; cookCounts = counts; }
+  } catch(e) { console.warn('Cook count sync failed:', e); }
+  return cookCounts[slug];
 }
 
-// ═══════════════════════
-// MARKDOWN UTILS
-// ═══════════════════════
+// ═══════════════════════════════════════════════
+// REVIEWS
+// ═══════════════════════════════════════════════
+async function loadReviews() {
+  try {
+    const res = await ghGet('data/reviews.json');
+    if (res.status === 200) {
+      const d = await res.json();
+      reviewsSha = d.sha;
+      reviews = JSON.parse(b64decode(d.content));
+    }
+  } catch(e) { reviews = []; }
+}
+
+function getReviewsForSlug(slug) { return reviews.filter(r => r.slug === slug); }
+
+function avgRating(slug) {
+  const rs = getReviewsForSlug(slug).filter(r => r.rating > 0);
+  if (!rs.length) return null;
+  return rs.reduce((a,b) => a + b.rating, 0) / rs.length;
+}
+
+function starsHtml(n, size = '1rem') {
+  if (!n) return '';
+  const full = Math.round(n);
+  return '★'.repeat(full) + '☆'.repeat(5 - full);
+}
+
+async function submitReview(slug, author, rating, comment) {
+  const entry = {
+    slug,
+    author: author || 'Anonym',
+    rating: rating || 0,
+    comment: comment || '',
+    date: new Date().toISOString().slice(0, 10)
+  };
+
+  // Fetch latest, append, write back
+  let latestReviews = [...reviews];
+  let sha = reviewsSha;
+  try {
+    const latest = await ghGet('data/reviews.json');
+    if (latest.status === 200) {
+      const d = await latest.json();
+      sha = d.sha;
+      latestReviews = JSON.parse(b64decode(d.content));
+    }
+  } catch(e) {}
+
+  latestReviews.push(entry);
+  const res = await ghPut('data/reviews.json', JSON.stringify(latestReviews, null, 2), `Review: ${slug} by ${entry.author}`, sha);
+  if (!res.ok) { const e = await res.json(); throw new Error(e.message || 'Kunne ikke gemme review'); }
+
+  const u = await res.json();
+  reviewsSha = u.content.sha;
+  reviews = latestReviews;
+}
+
+// ═══════════════════════════════════════════════
+// MARKDOWN
+// ═══════════════════════════════════════════════
 function parseFrontmatter(raw) {
   const m = raw.match(/^---\s*\n([\s\S]*?)\n---\s*\n([\s\S]*)$/);
   if (!m) return { meta: {}, body: raw };
   try { return { meta: jsyaml.load(m[1]) || {}, body: m[2] }; }
-  catch(e) { return { meta: {}, body: raw, error: e.message }; }
+  catch(e) { return { meta: {}, body: raw }; }
 }
 
 function buildMarkdown(data) {
@@ -517,31 +565,54 @@ function buildMarkdown(data) {
     tags: tagArr.length ? tagArr : undefined,
     servings: data.servings || undefined,
     time: data.time || undefined,
-    ingredients: data.ingredients.filter(i => i.name.trim()).map(i => ({ name: i.name.trim(), amount: i.amount.trim() || '' }))
+    ingredients: data.ingredients.filter(i => i.name.trim()).map(i => ({ name: i.name.trim(), amount: i.amount.trim()||'' }))
   });
-  const stepsText = data.steps.filter(s => s.trim()).map((s, i) => `${i + 1}. ${s.trim()}`).join('\n\n');
+  const stepsText = data.steps.filter(s => s.trim()).map((s,i) => `${i+1}. ${s.trim()}`).join('\n\n');
   const notesText = data.notes ? `\n\n> **Tip:** ${data.notes.trim()}` : '';
-  return `---\n${fm}---\n\n## Method\n\n${stepsText}${notesText}\n`;
+  return `---\n${fm}---\n\n## Fremgangsmåde\n\n${stepsText}${notesText}\n`;
 }
 
-// ═══════════════════════
+// ═══════════════════════════════════════════════
+// RECIPE UPLOAD
+// ═══════════════════════════════════════════════
+async function uploadRecipe(filename, content) {
+  const checkRes = await ghGet('recipes/' + filename);
+  let sha = null;
+  if (checkRes.status === 200) sha = (await checkRes.json()).sha;
+  const mdRes = await ghPut('recipes/' + filename, content, `Add recipe: ${filename}`, sha);
+  if (!mdRes.ok) { const e = await mdRes.json(); throw new Error(e.message || 'Upload mislykkedes'); }
+
+  const idxRes = await ghGet('recipes/index.json');
+  let idxSha = null, idxList = [];
+  if (idxRes.status === 200) { const d = await idxRes.json(); idxSha = d.sha; idxList = JSON.parse(b64decode(d.content)); }
+  if (!idxList.includes(filename)) idxList.push(filename);
+  const idxPut = await ghPut('recipes/index.json', JSON.stringify(idxList, null, 2), `Update index: add ${filename}`, idxSha);
+  if (!idxPut.ok) { const e = await idxPut.json(); throw new Error(e.message || 'Index-opdatering mislykkedes'); }
+}
+
+// ═══════════════════════════════════════════════
 // LOAD & RENDER
-// ═══════════════════════
-async function loadRecipes() {
-  let filenames = [];
-  try { const r = await fetch('recipes/index.json'); if (r.ok) filenames = await r.json(); } catch(e) {}
-  const loaded = await Promise.all(filenames.map(async fn => {
-    try {
-      const r = await fetch('recipes/' + fn);
-      if (!r.ok) return null;
-      const raw = await r.text();
-      const { meta, body } = parseFrontmatter(raw);
-      return { filename: fn, slug: fn.replace('.md',''), meta, body, raw };
-    } catch(e) { return null; }
-  }));
-  allRecipes = loaded.filter(Boolean);
+// ═══════════════════════════════════════════════
+async function loadAll() {
+  await Promise.all([
+    loadCookCounts(),
+    loadReviews(),
+    (async () => {
+      let filenames = [];
+      try { const r = await fetch('recipes/index.json'); if (r.ok) filenames = await r.json(); } catch(e) {}
+      const loaded = await Promise.all(filenames.map(async fn => {
+        try {
+          const r = await fetch('recipes/' + fn);
+          if (!r.ok) return null;
+          const raw = await r.text();
+          const { meta, body } = parseFrontmatter(raw);
+          return { filename: fn, slug: fn.replace('.md',''), meta, body, raw };
+        } catch(e) { return null; }
+      }));
+      allRecipes = loaded.filter(Boolean);
+    })()
+  ]);
   renderList();
-  updateSettingsBtn();
 }
 
 function renderList() {
@@ -566,13 +637,19 @@ function renderList() {
 
   list.innerHTML = '';
   noResults.style.display = filtered.length === 0 ? 'block' : 'none';
+
   allRecipes.forEach(r => {
-    const visible = filtered.includes(r);
+    const isVisible = filtered.includes(r);
     const cc = getCookCount(r.slug);
+    const avg = avgRating(r.slug);
     const d = document.createElement('div');
-    d.className = 'recipe-list-item' + (r.slug===selectedSlug?' active':'') + (!visible?' filtered-out':'');
+    d.className = 'recipe-list-item' + (r.slug===selectedSlug?' active':'') + (!isVisible?' filtered-out':'');
     d.innerHTML = `<div class="rli-title">${r.meta.title||r.filename}</div>
-      <div class="rli-meta"><span>${r.meta.time||''}</span>${cc>0?`<span class="cooked-count">made ${cc}×</span>`:''}</div>`;
+      <div class="rli-meta">
+        <span>${r.meta.time||''}</span>
+        ${cc>0?`<span class="cooked-count">lavet ${cc}×</span>`:''}
+        ${avg?`<span class="rli-stars" title="${avg.toFixed(1)} stjerner">${starsHtml(avg)}</span>`:''}
+      </div>`;
     d.addEventListener('click', () => selectRecipe(r.slug));
     list.appendChild(d);
   });
@@ -587,43 +664,152 @@ function selectRecipe(slug) {
   renderRecipe(recipe);
 }
 
+function cookCountLabel(n) {
+  if (n === 0) return 'Aldrig lavet';
+  if (n === 1) return 'Lavet én gang';
+  return `Lavet ${n} gange`;
+}
+
 function renderRecipe(recipe) {
   const main = document.getElementById('main');
   const cc = getCookCount(recipe.slug);
   const ings = recipe.meta.ingredients || [];
   const tags = recipe.meta.tags || [];
+  const avg = avgRating(recipe.slug);
+  const recipeReviews = getReviewsForSlug(recipe.slug);
+
+  const avgHtml = avg
+    ? `<div style="margin-top:0.3rem"><span class="cooked-avg-stars">${starsHtml(avg)}</span><span class="cooked-avg-label">${avg.toFixed(1)} / 5 (${recipeReviews.filter(r=>r.rating>0).length} bedømmelser)</span></div>`
+    : '';
+
+  const reviewsHtml = recipeReviews.length === 0
+    ? `<p class="no-reviews">Ingen bedømmelser endnu — vær den første!</p>`
+    : recipeReviews.slice().reverse().map(r => `
+        <div class="review-card">
+          <div class="review-top">
+            <span class="review-author">${escHtml(r.author)}</span>
+            ${r.rating ? `<span class="review-stars">${starsHtml(r.rating)}</span>` : ''}
+            <span class="review-date">${r.date}</span>
+          </div>
+          ${r.comment ? `<div class="review-comment">${escHtml(r.comment)}</div>` : ''}
+        </div>`).join('');
+
   main.innerHTML = `<div class="recipe-view">
     <div class="recipe-header">
       <h2>${recipe.meta.title||recipe.filename}</h2>
       ${recipe.meta.description?`<p class="recipe-desc">${recipe.meta.description}</p>`:''}
       <div class="recipe-meta-row">
         ${recipe.meta.time?`<span class="meta-chip">⏱ <strong>${recipe.meta.time}</strong></span>`:''}
-        ${recipe.meta.servings?`<span class="meta-chip">🍽 <strong>${recipe.meta.servings} servings</strong></span>`:''}
+        ${recipe.meta.servings?`<span class="meta-chip">🍽 <strong>${recipe.meta.servings} portioner</strong></span>`:''}
       </div>
       ${tags.length?`<div class="tags">${tags.map(t=>`<span class="tag">${t}</span>`).join('')}</div>`:''}
     </div>
+
     <div class="cooked-counter">
       <div class="cooked-num" id="cook-num">${cc}</div>
-      <div class="cooked-label"><span>Times Cooked</span>${cc===0?'Never made yet':cc===1?'Made once':`Made ${cc} times`}</div>
-      <button class="cook-btn" id="cook-btn">✓ I Made This</button>
+      <div class="cooked-info">
+        <div class="cooked-label"><span>Gange lavet</span>${cookCountLabel(cc)}</div>
+        ${avgHtml}
+      </div>
+      <button class="cook-btn" id="cook-btn">✓ Jeg lavede den!</button>
     </div>
-    ${ings.length?`<div class="ingredients-section"><h3>Ingredients</h3><div class="ingredients-grid">
+
+    ${ings.length?`<div class="ingredients-section"><h3>Ingredienser</h3><div class="ingredients-grid">
       ${ings.map(i=>`<div class="ingredient-row"><span class="ingredient-name">${i.name}</span><span class="ingredient-amount">${i.amount||''}</span></div>`).join('')}
     </div></div>`:''}
-    <div class="method-section"><h3>Method</h3><div class="method-body">${marked.parse(recipe.body||'')}</div></div>
+
+    <div class="method-section"><h3>Fremgangsmåde</h3><div class="method-body">${marked.parse(recipe.body||'')}</div></div>
+
+    <div class="reviews-section">
+      <div class="reviews-header">
+        <h3>Bedømmelser & kommentarer</h3>
+        ${avg?`<span class="reviews-summary"><span class="stars">${starsHtml(avg)}</span> ${avg.toFixed(1)}</span>`:''}
+      </div>
+      <div id="reviews-list">${reviewsHtml}</div>
+    </div>
   </div>`;
+
   document.getElementById('cook-btn').addEventListener('click', () => {
-    const n = incrementCookCount(recipe.slug);
-    const el = document.getElementById('cook-num');
-    el.textContent = n;
-    el.classList.remove('cook-pulse'); void el.offsetWidth; el.classList.add('cook-pulse');
-    renderList();
+    pendingReviewSlug = recipe.slug;
+    openReviewModal();
   });
 }
 
-// ═══════════════════════
+function escHtml(s) {
+  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+// ═══════════════════════════════════════════════
+// REVIEW MODAL
+// ═══════════════════════════════════════════════
+const starLabels = ['','Dårlig','Okay','God','Meget god','Fremragende'];
+
+function openReviewModal() {
+  pickedStar = 0;
+  document.getElementById('r-name').value = '';
+  document.getElementById('r-comment').value = '';
+  document.getElementById('review-msg').innerHTML = '';
+  renderStarPicker();
+  document.getElementById('review-modal').style.display = 'flex';
+}
+
+function renderStarPicker() {
+  document.querySelectorAll('#star-picker .star').forEach(s => {
+    s.classList.toggle('active', +s.dataset.v <= pickedStar);
+  });
+  document.getElementById('star-label').textContent = pickedStar ? starLabels[pickedStar] : 'Ingen bedømmelse';
+}
+
+document.querySelectorAll('#star-picker .star').forEach(star => {
+  star.addEventListener('click', () => { pickedStar = +star.dataset.v; renderStarPicker(); });
+  star.addEventListener('mouseenter', () => {
+    document.querySelectorAll('#star-picker .star').forEach(s => s.classList.toggle('active', +s.dataset.v <= +star.dataset.v));
+    document.getElementById('star-label').textContent = starLabels[+star.dataset.v];
+  });
+});
+document.getElementById('star-picker').addEventListener('mouseleave', renderStarPicker);
+
+document.getElementById('review-cancel').addEventListener('click', () => {
+  document.getElementById('review-modal').style.display = 'none';
+});
+
+document.getElementById('review-submit').addEventListener('click', async () => {
+  const slug = pendingReviewSlug;
+  if (!slug) return;
+  const author = document.getElementById('r-name').value.trim();
+  const comment = document.getElementById('r-comment').value.trim();
+  const btn = document.getElementById('review-submit');
+
+  btn.disabled = true; btn.textContent = 'Gemmer…';
+  document.getElementById('review-msg').innerHTML = `<div class="msg msg-loading">⏳ Gemmer…</div>`;
+
+  try {
+    // Save review
+    await submitReview(slug, author, pickedStar, comment);
+
+    // Also bump the cook count
+    const n = await saveCookCount(slug);
+
+    // Update UI
+    const numEl = document.getElementById('cook-num');
+    if (numEl) { numEl.textContent = n; numEl.classList.remove('cook-pulse'); void numEl.offsetWidth; numEl.classList.add('cook-pulse'); }
+
+    document.getElementById('review-modal').style.display = 'none';
+    renderList();
+
+    // Re-render recipe to show new review immediately
+    const recipe = allRecipes.find(r => r.slug === slug);
+    if (recipe) renderRecipe(recipe);
+
+  } catch(e) {
+    document.getElementById('review-msg').innerHTML = `<div class="msg msg-error">Fejl: ${e.message}</div>`;
+    btn.disabled = false; btn.textContent = 'Gem';
+  }
+});
+
+// ═══════════════════════════════════════════════
 // INGREDIENT FILTER
-// ═══════════════════════
+// ═══════════════════════════════════════════════
 function allIngredients() {
   const s = new Set();
   allRecipes.forEach(r => (r.meta.ingredients||[]).forEach(i => s.add(i.name.toLowerCase())));
@@ -647,193 +833,142 @@ ingInput.addEventListener('input', () => {
   }));
 });
 ingInput.addEventListener('keydown', e => {
-  if (e.key === 'Enter') { const v = ingInput.value.trim().toLowerCase(); if(v){addIngredient(v);ingInput.value='';suggestEl.style.display='none';} }
+  if (e.key==='Enter'){const v=ingInput.value.trim().toLowerCase();if(v){addIngredient(v);ingInput.value='';suggestEl.style.display='none';}}
 });
 document.addEventListener('click', e => {
   if (!e.target.closest('#ingredient-input') && !e.target.closest('#ingredient-suggestions')) suggestEl.style.display = 'none';
 });
 
 function addIngredient(name) { if(selectedIngredients.includes(name))return; selectedIngredients.push(name); renderChips(); renderList(); }
-function removeIngredient(name) { selectedIngredients = selectedIngredients.filter(i=>i!==name); renderChips(); renderList(); }
+function removeIngredient(name) { selectedIngredients=selectedIngredients.filter(i=>i!==name); renderChips(); renderList(); }
 function renderChips() {
   activeIngsEl.innerHTML = selectedIngredients.map(i=>`<span class="ing-chip" data-ing="${i}">${i} <span>×</span></span>`).join('');
-  activeIngsEl.querySelectorAll('.ing-chip').forEach(c => c.addEventListener('click',()=>removeIngredient(c.dataset.ing)));
-  matchModeEl.style.display = selectedIngredients.length >= 2 ? 'flex' : 'none';
+  activeIngsEl.querySelectorAll('.ing-chip').forEach(c=>c.addEventListener('click',()=>removeIngredient(c.dataset.ing)));
+  matchModeEl.style.display = selectedIngredients.length>=2?'flex':'none';
 }
-matchModeEl.querySelectorAll('button').forEach(btn => btn.addEventListener('click',()=>{
-  matchMode = btn.dataset.mode;
+matchModeEl.querySelectorAll('button').forEach(btn=>btn.addEventListener('click',()=>{
+  matchMode=btn.dataset.mode;
   matchModeEl.querySelectorAll('button').forEach(b=>b.classList.toggle('active',b===btn));
   renderList();
 }));
 document.getElementById('text-search').addEventListener('input', renderList);
 
-// ═══════════════════════
-// SETTINGS
-// ═══════════════════════
-function updateSettingsBtn() {
-  const btn = document.getElementById('settings-btn');
-  btn.classList.toggle('configured', isConfigured());
-  btn.textContent = isConfigured() ? '✓ GitHub Connected' : '⚙ GitHub Settings';
-}
-
-document.getElementById('settings-btn').addEventListener('click', () => {
-  const c = getConfig();
-  document.getElementById('s-owner').value = c.owner;
-  document.getElementById('s-repo').value = c.repo;
-  document.getElementById('s-branch').value = c.branch || 'main';
-  document.getElementById('s-token').value = c.token;
-  document.getElementById('settings-status').style.display = 'none';
-  document.getElementById('settings-modal').style.display = 'flex';
-});
-
-document.getElementById('settings-cancel').addEventListener('click', () => document.getElementById('settings-modal').style.display = 'none');
-
-document.getElementById('settings-save').addEventListener('click', () => {
-  saveConfig({ owner: document.getElementById('s-owner').value.trim(), repo: document.getElementById('s-repo').value.trim(), branch: document.getElementById('s-branch').value.trim()||'main', token: document.getElementById('s-token').value.trim() });
-  document.getElementById('settings-modal').style.display = 'none';
-  updateSettingsBtn();
-});
-
-document.getElementById('settings-test').addEventListener('click', async () => {
-  saveConfig({ owner: document.getElementById('s-owner').value.trim(), repo: document.getElementById('s-repo').value.trim(), branch: document.getElementById('s-branch').value.trim()||'main', token: document.getElementById('s-token').value.trim() });
-  const statusEl = document.getElementById('settings-status');
-  const dot = document.getElementById('s-dot');
-  const txt = document.getElementById('s-status-text');
-  statusEl.style.display = 'flex'; dot.className = 'status-dot warn'; txt.textContent = 'Testing…';
-  const r = await testConnection();
-  dot.className = 'status-dot' + (r.ok ? ' ok' : '');
-  txt.textContent = r.ok ? 'Connection successful!' : r.msg;
-});
-
-// ═══════════════════════
-// ADD RECIPE
-// ═══════════════════════
+// ═══════════════════════════════════════════════
+// ADD RECIPE FORM
+// ═══════════════════════════════════════════════
 function renderIngBuilder() {
   const b = document.getElementById('ing-builder');
-  b.innerHTML = ingredientRows.map((row,i) => `<div class="ing-builder-row">
-    <input type="text" placeholder="Ingredient name" value="${row.name}" data-i="${i}" data-f="name" />
-    <input type="text" placeholder="Amount" value="${row.amount}" data-i="${i}" data-f="amount" />
+  b.innerHTML = ingredientRows.map((row,i)=>`<div class="ing-builder-row">
+    <input type="text" placeholder="Ingrediensnavn" value="${escHtml(row.name)}" data-i="${i}" data-f="name"/>
+    <input type="text" placeholder="Mængde" value="${escHtml(row.amount)}" data-i="${i}" data-f="amount"/>
     <button class="ing-del-btn" data-i="${i}">×</button>
   </div>`).join('');
-  b.querySelectorAll('input').forEach(inp => inp.addEventListener('input', () => { ingredientRows[inp.dataset.i][inp.dataset.f] = inp.value; }));
-  b.querySelectorAll('.ing-del-btn').forEach(btn => btn.addEventListener('click', () => { ingredientRows.splice(+btn.dataset.i,1); renderIngBuilder(); }));
+  b.querySelectorAll('input').forEach(inp=>inp.addEventListener('input',()=>{ingredientRows[inp.dataset.i][inp.dataset.f]=inp.value;}));
+  b.querySelectorAll('.ing-del-btn').forEach(btn=>btn.addEventListener('click',()=>{ingredientRows.splice(+btn.dataset.i,1);renderIngBuilder();}));
 }
 
 function renderStepsBuilder() {
   const b = document.getElementById('steps-builder');
-  b.innerHTML = stepRows.map((step,i) => `<div class="step-row">
+  b.innerHTML = stepRows.map((step,i)=>`<div class="step-row">
     <span class="step-num">${i+1}.</span>
-    <textarea data-i="${i}" rows="2" placeholder="Describe this step…">${step}</textarea>
+    <textarea data-i="${i}" rows="2" placeholder="Beskriv dette trin…">${escHtml(step)}</textarea>
     <button class="step-del-btn" data-i="${i}">×</button>
   </div>`).join('');
-  b.querySelectorAll('textarea').forEach(ta => ta.addEventListener('input', () => { stepRows[ta.dataset.i] = ta.value; }));
-  b.querySelectorAll('.step-del-btn').forEach(btn => btn.addEventListener('click', () => { stepRows.splice(+btn.dataset.i,1); renderStepsBuilder(); }));
+  b.querySelectorAll('textarea').forEach(ta=>ta.addEventListener('input',()=>{stepRows[ta.dataset.i]=ta.value;}));
+  b.querySelectorAll('.step-del-btn').forEach(btn=>btn.addEventListener('click',()=>{stepRows.splice(+btn.dataset.i,1);renderStepsBuilder();}));
 }
 
-document.getElementById('add-recipe-btn').addEventListener('click', () => {
-  if (!isConfigured()) { document.getElementById('settings-modal').style.display = 'flex'; return; }
-  ['f-title','f-time','f-desc','f-servings','f-tags','f-notes'].forEach(id => document.getElementById(id).value = '');
-  ingredientRows = [{name:'',amount:''},{name:'',amount:''},{name:'',amount:''}];
-  stepRows = ['','',''];
+document.getElementById('add-recipe-btn').addEventListener('click',()=>{
+  ['f-title','f-time','f-desc','f-servings','f-tags','f-notes'].forEach(id=>document.getElementById(id).value='');
+  ingredientRows=[{name:'',amount:''},{name:'',amount:''},{name:'',amount:''}];
+  stepRows=['','',''];
   renderIngBuilder(); renderStepsBuilder();
-  document.getElementById('add-msg').innerHTML = '';
-  document.getElementById('add-modal').style.display = 'flex';
+  document.getElementById('add-msg').innerHTML='';
+  document.getElementById('add-modal').style.display='flex';
 });
+document.getElementById('add-ing-btn').addEventListener('click',()=>{ingredientRows.push({name:'',amount:''});renderIngBuilder();});
+document.getElementById('add-step-btn').addEventListener('click',()=>{stepRows.push('');renderStepsBuilder();});
+document.getElementById('add-cancel').addEventListener('click',()=>document.getElementById('add-modal').style.display='none');
 
-document.getElementById('add-ing-btn').addEventListener('click', () => { ingredientRows.push({name:'',amount:''}); renderIngBuilder(); });
-document.getElementById('add-step-btn').addEventListener('click', () => { stepRows.push(''); renderStepsBuilder(); });
-document.getElementById('add-cancel').addEventListener('click', () => document.getElementById('add-modal').style.display = 'none');
-
-function getFormData() {
+function getFormData(){
   return {
-    title: document.getElementById('f-title').value.trim(),
-    description: document.getElementById('f-desc').value.trim(),
-    time: document.getElementById('f-time').value.trim(),
-    servings: document.getElementById('f-servings').value.trim(),
-    tags: document.getElementById('f-tags').value.trim(),
-    ingredients: ingredientRows,
-    steps: stepRows,
-    notes: document.getElementById('f-notes').value.trim()
+    title:document.getElementById('f-title').value.trim(),
+    description:document.getElementById('f-desc').value.trim(),
+    time:document.getElementById('f-time').value.trim(),
+    servings:document.getElementById('f-servings').value.trim(),
+    tags:document.getElementById('f-tags').value.trim(),
+    ingredients:ingredientRows, steps:stepRows,
+    notes:document.getElementById('f-notes').value.trim()
   };
 }
-
-function validateForm(data) {
-  if (!data.title) return 'Please enter a recipe title.';
-  if (!data.ingredients.some(i => i.name.trim())) return 'Please add at least one ingredient.';
-  if (!data.steps.some(s => s.trim())) return 'Please add at least one method step.';
+function validateForm(data){
+  if(!data.title) return 'Angiv venligst en titel.';
+  if(!data.ingredients.some(i=>i.name.trim())) return 'Tilføj venligst mindst én ingrediens.';
+  if(!data.steps.some(s=>s.trim())) return 'Tilføj venligst mindst ét trin.';
   return null;
 }
+function showMsg(id,type,text){document.getElementById(id).innerHTML=`<div class="msg msg-${type}">${text}</div>`;}
 
-function showMsg(id, type, text) {
-  document.getElementById(id).innerHTML = `<div class="msg msg-${type}">${text}</div>`;
-}
-
-document.getElementById('add-preview-btn').addEventListener('click', () => {
-  const data = getFormData();
-  const err = validateForm(data);
-  if (err) { showMsg('add-msg','error',err); return; }
-  const md = buildMarkdown(data);
-  const { meta, body } = parseFrontmatter(md);
-  const ings = meta.ingredients || [];
-  const tags = meta.tags || [];
-  document.getElementById('preview-content').innerHTML = `
+document.getElementById('add-preview-btn').addEventListener('click',()=>{
+  const data=getFormData(); const err=validateForm(data); if(err){showMsg('add-msg','error',err);return;}
+  const md=buildMarkdown(data); const {meta,body}=parseFrontmatter(md);
+  const ings=meta.ingredients||[]; const tags=meta.tags||[];
+  document.getElementById('preview-content').innerHTML=`
     <div style="margin-bottom:1.5rem;padding-bottom:1.5rem;border-bottom:1px solid var(--border)">
       <h2 style="font-size:1.8rem;font-weight:600;margin-bottom:0.4rem">${meta.title}</h2>
       ${meta.description?`<p style="color:var(--ink-light);font-style:italic;margin-bottom:0.5rem">${meta.description}</p>`:''}
       <div style="display:flex;gap:1rem;flex-wrap:wrap">
         ${meta.time?`<span style="font-family:var(--font-mono);font-size:0.72rem;color:var(--ink-light)">⏱ ${meta.time}</span>`:''}
-        ${meta.servings?`<span style="font-family:var(--font-mono);font-size:0.72rem;color:var(--ink-light)">🍽 ${meta.servings} servings</span>`:''}
+        ${meta.servings?`<span style="font-family:var(--font-mono);font-size:0.72rem;color:var(--ink-light)">🍽 ${meta.servings} portioner</span>`:''}
       </div>
       ${tags.length?`<div style="margin-top:0.5rem;display:flex;gap:0.4rem;flex-wrap:wrap">${tags.map(t=>`<span class="tag">${t}</span>`).join('')}</div>`:''}
     </div>
-    ${ings.length?`<div style="margin-bottom:1.5rem"><h3 style="font-family:var(--font-mono);font-size:0.63rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--ink-light);margin-bottom:0.75rem">Ingredients</h3>
+    ${ings.length?`<div style="margin-bottom:1.5rem"><h3 style="font-family:var(--font-mono);font-size:0.63rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--ink-light);margin-bottom:0.75rem">Ingredienser</h3>
     <div class="ingredients-grid">${ings.map(i=>`<div class="ingredient-row"><span class="ingredient-name">${i.name}</span><span class="ingredient-amount">${i.amount}</span></div>`).join('')}</div></div>`:''}
-    <div><h3 style="font-family:var(--font-mono);font-size:0.63rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--ink-light);margin-bottom:1rem">Method</h3>
+    <div><h3 style="font-family:var(--font-mono);font-size:0.63rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--ink-light);margin-bottom:1rem">Fremgangsmåde</h3>
     <div class="method-body">${marked.parse(body)}</div></div>`;
-  document.getElementById('preview-msg').innerHTML = '';
-  document.getElementById('add-modal').style.display = 'none';
-  document.getElementById('preview-modal').style.display = 'flex';
+  document.getElementById('preview-msg').innerHTML='';
+  document.getElementById('add-modal').style.display='none';
+  document.getElementById('preview-modal').style.display='flex';
 });
 
-document.getElementById('preview-back').addEventListener('click', () => {
-  document.getElementById('preview-modal').style.display = 'none';
-  document.getElementById('add-modal').style.display = 'flex';
+document.getElementById('preview-back').addEventListener('click',()=>{
+  document.getElementById('preview-modal').style.display='none';
+  document.getElementById('add-modal').style.display='flex';
 });
 
-async function doSave(msgId, saveBtnId) {
-  const data = getFormData();
-  const err = validateForm(data);
-  if (err) { showMsg(msgId, 'error', err); return; }
-  const md = buildMarkdown(data);
-  const slug = data.title.toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'');
-  const filename = slug + '.md';
-  const saveBtn = document.getElementById(saveBtnId);
-  saveBtn.disabled = true; saveBtn.textContent = 'Saving…';
-  showMsg(msgId, 'loading', '⏳ Uploading to GitHub…');
+async function doSave(msgId,saveBtnId){
+  const data=getFormData(); const err=validateForm(data); if(err){showMsg(msgId,'error',err);return;}
+  const md=buildMarkdown(data);
+  const slug=data.title.toLowerCase().replace(/æ/g,'ae').replace(/ø/g,'oe').replace(/å/g,'aa').replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'');
+  const filename=slug+'.md';
+  const saveBtn=document.getElementById(saveBtnId);
+  saveBtn.disabled=true; saveBtn.textContent='Gemmer…';
+  showMsg(msgId,'loading','⏳ Uploader til GitHub…');
   try {
     await uploadRecipe(filename, md);
-    showMsg(msgId, 'success', '✓ Saved! The recipe will appear once GitHub Pages rebuilds (usually &lt;1 min). Reloading list…');
-    const { meta, body } = parseFrontmatter(md);
-    if (!allRecipes.find(r=>r.slug===slug)) allRecipes.unshift({ filename, slug, meta, body, raw: md });
+    showMsg(msgId,'success','✓ Gemt! Opskriften vises, når GitHub Pages er bygget om (typisk under 1 min).');
+    const {meta,body}=parseFrontmatter(md);
+    if(!allRecipes.find(r=>r.slug===slug)) allRecipes.unshift({filename,slug,meta,body,raw:md});
     renderList();
-    setTimeout(() => {
-      document.getElementById('add-modal').style.display = 'none';
-      document.getElementById('preview-modal').style.display = 'none';
+    setTimeout(()=>{
+      document.getElementById('add-modal').style.display='none';
+      document.getElementById('preview-modal').style.display='none';
       selectRecipe(slug);
-    }, 2500);
+    },2500);
   } catch(e) {
-    showMsg(msgId, 'error', `Error: ${e.message}`);
-    saveBtn.disabled = false; saveBtn.textContent = '↑ Save to GitHub';
+    showMsg(msgId,'error',`Fejl: ${e.message}`);
+    saveBtn.disabled=false; saveBtn.textContent='↑ Gem på GitHub';
   }
 }
 
-document.getElementById('add-save-btn').addEventListener('click', () => doSave('add-msg','add-save-btn'));
-document.getElementById('preview-save-btn').addEventListener('click', () => doSave('preview-msg','preview-save-btn'));
+document.getElementById('add-save-btn').addEventListener('click',()=>doSave('add-msg','add-save-btn'));
+document.getElementById('preview-save-btn').addEventListener('click',()=>doSave('preview-msg','preview-save-btn'));
 
 // ═══════════════════════
 // INIT
 // ═══════════════════════
-loadRecipes();
+loadAll();
 </script>
 </body>
 </html>
